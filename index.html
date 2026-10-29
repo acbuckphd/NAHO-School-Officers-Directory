@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Tribunal & Hearing Officers Directory | NAHO Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-navy: #1e3a8a;
+      --primary-dark: #0f172a;
+      --accent-blue: #2563eb;
+      --accent-light: #dbeafe;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-500: #64748b;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --gold-bg: #fef3c7;
+      --gold-border: #f59e0b;
+      --gold-text: #92400e;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--slate-100);
+      color: var(--slate-800);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-navy) 100%);
+      color: #ffffff;
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom: 4px solid var(--accent-blue);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    }
+    .header-content { max-width: 1100px; margin: 0 auto; }
+    .badge-naho {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      color: #93c5fd;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    header h1 { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    header p { color: #cbd5e1; font-size: 1.05rem; max-width: 780px; margin: 0 auto 20px auto; }
+    .header-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px;
+      border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      border: none; transition: all 0.2s ease; text-decoration: none;
+    }
+    .btn-primary { background-color: var(--accent-blue); color: #ffffff; }
+    .btn-primary:hover { background-color: #1d4ed8; box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3); }
+    .btn-secondary { background: rgba(255, 255, 255, 0.12); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.22); }
+    main { max-width: 1200px; margin: -24px auto 0 auto; padding: 0 20px; }
+    .controls-card {
+      background: #ffffff; border-radius: 12px; padding: 20px;
+      box-shadow: var(--card-shadow); border: 1px solid var(--slate-200); margin-bottom: 24px;
+    }
+    .search-wrapper { position: relative; margin-bottom: 16px; }
+    .search-input {
+      width: 100%; padding: 12px 16px 12px 42px; border: 1px solid var(--slate-300);
+      border-radius: 8px; font-size: 0.95rem; color: var(--slate-800);
+      background-color: var(--slate-50); transition: border-color 0.2s;
+    }
+    .search-input:focus {
+      outline: none; border-color: var(--accent-blue); background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    .search-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--slate-500); pointer-events: none;
+    }
+    .filter-label {
+      font-size: 0.8rem; font-weight: 700; color: var(--slate-500);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; display: block;
+    }
+    .state-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill-btn {
+      background: var(--slate-100); border: 1px solid var(--slate-300); color: var(--slate-700);
+      padding: 6px 14px; border-radius: 9999px; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s ease;
+    }
+    .pill-btn:hover { background: var(--slate-200); color: var(--primary-dark); }
+    .pill-btn.active { background: var(--primary-navy); color: #ffffff; border-color: var(--primary-navy); }
+    .pill-count { background: rgba(0, 0, 0, 0.08); padding: 2px 7px; border-radius: 9999px; font-size: 0.75rem; }
+    .pill-btn.active .pill-count { background: rgba(255, 255, 255, 0.25); }
+    .state-section { margin-bottom: 32px; }
+    .state-header {
+      background: #ffffff; padding: 14px 20px; border-radius: 10px;
+      border-left: 6px solid var(--primary-navy); border-top: 1px solid var(--slate-200);
+      border-right: 1px solid var(--slate-200); border-bottom: 1px solid var(--slate-200);
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .state-title-wrap { display: flex; align-items: center; gap: 12px; }
+    .state-name { font-size: 1.25rem; font-weight: 700; color: var(--primary-navy); }
+    .state-badge {
+      font-size: 0.8rem; font-weight: 600; background: var(--slate-100);
+      color: var(--slate-700); padding: 3px 9px; border-radius: 6px; border: 1px solid var(--slate-300);
+    }
+    .btn-copy-state {
+      background: var(--slate-50); border: 1px solid var(--slate-300); font-size: 0.8rem;
+      padding: 5px 12px; border-radius: 6px; color: var(--slate-700); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-copy-state:hover { background: var(--slate-200); color: var(--primary-dark); }
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px;
+    }
+    .member-card {
+      background: #ffffff; border-radius: 10px; border: 1px solid var(--slate-200);
+      padding: 20px; box-shadow: var(--card-shadow); display: flex; flex-direction: column;
+      justify-content: space-between; transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .member-card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow-hover); border-color: var(--accent-light); }
+    .card-top { margin-bottom: 14px; }
+    .member-name { font-size: 1.15rem; font-weight: 700; color: var(--slate-800); margin-bottom: 4px; }
+    .member-role { font-size: 0.88rem; font-weight: 600; color: var(--accent-blue); margin-bottom: 4px; }
+    .member-district { font-size: 0.88rem; color: var(--slate-500); margin-bottom: 12px; }
+    .cert-badge {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 4px 10px;
+      border-radius: 6px; margin-bottom: 12px; line-height: 1.3;
+    }
+    .badge-certified { background-color: var(--gold-bg); color: var(--gold-text); border: 1px solid var(--gold-border); }
+    .badge-in-progress { background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+    .badge-training { background-color: var(--slate-100); color: var(--slate-700); border: 1px solid var(--slate-300); }
+    .card-details { border-top: 1px solid var(--slate-100); padding-top: 12px; font-size: 0.85rem; }
+    .detail-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .detail-link {
+      color: var(--slate-700); text-decoration: none; word-break: break-all;
+      display: inline-flex; align-items: center; gap: 6px; font-weight: 500;
+    }
+    .detail-link:hover { color: var(--accent-blue); text-decoration: underline; }
+    .btn-copy-small {
+      background: none; border: none; color: var(--slate-500); cursor: pointer;
+      padding: 3px 6px; border-radius: 4px;
+    }
+    .btn-copy-small:hover { color: var(--accent-blue); background-color: var(--slate-100); }
+    #toast {
+      visibility: hidden; min-width: 250px; background-color: var(--primary-dark);
+      color: #ffffff; text-align: center; border-radius: 8px; padding: 12px 20px;
+      position: fixed; z-index: 1000; bottom: 30px; left: 50%; transform: translateX(-50%);
+      font-size: 0.9rem; box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }
+    #toast.show { visibility: visible; animation: fadein 0.3s, fadeout 0.3s 2.2s; }
+    @keyframes fadein { from { bottom: 15px; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+    @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 15px; opacity: 0; } }
+    @media print {
+      header { background: none; color: #000; border-bottom: 2px solid #000; padding: 10px 0; }
+      .controls-card, .header-actions, .btn-copy-small, .btn-copy-state { display: none !important; }
+      .state-section { page-break-inside: avoid; }
+      .member-card { border: 1px solid #999; box-shadow: none; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <div class="badge-naho">National Association of Hearing Officials</div>
+      <h1>School Tribunal & Hearing Officers Directory</h1>
+      <p>Official Professional Network & Jurisdictional Listserv for School Tribunal Officers, Panel Members, and Student Discipline Administrators.</p>
+      
+      <div class="header-actions">
+        <button class="btn btn-primary" onclick="copyAllEmails()">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+          </svg>
+          Copy Complete Listserv (All States)
+        </button>
+        <button class="btn btn-secondary" onclick="window.print()">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zm1 2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2H6V3zm7 8v2a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-2h8z"/>
+          </svg>
+          Print / Save PDF Roster
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="controls-card">
+      <div class="search-wrapper">
+        <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by colleague name, school district, administrative role, or email..." onkeyup="filterDirectory()">
+      </div>
+
+      <span class="filter-label">Filter by State Jurisdiction</span>
+      <div class="state-pills" id="statePills"></div>
+    </div>
+
+    <!-- Container where dynamic state sections render -->
+    <div id="directoryContainer"></div>
+  </main>
+
+  <div id="toast">Copied to clipboard!</div>
+
+  <script>
+    let membersData = [];
+    let stateEmailsMap = {};
+
+    // Load data from the companion JSON file
+    async function loadMembers() {
+      try {
+        const response = await fetch('members.json?t=' + new Date().getTime());
+        membersData = await response.json();
+        renderDashboard();
+      } catch (err) {
+        console.error("Failed to load members.json", err);
+        document.getElementById("directoryContainer").innerHTML = "<p style='text-align:center; padding:40px; color:#64748b;'>Unable to load member directory data. Ensure members.json is present.</p>";
+      }
+    }
+
+    function renderDashboard() {
+      const container = document.getElementById("directoryContainer");
+      const pillsContainer = document.getElementById("statePills");
+      container.innerHTML = "";
+      pillsContainer.innerHTML = "";
+      stateEmailsMap = {};
+
+      // Group members by state
+      const grouped = {};
+      membersData.forEach(m => {
+        if (!grouped[m.state]) {
+          grouped[m.state] = { stateName: m.stateName || m.state, members: [] };
+          stateEmailsMap[m.state] = [];
+        }
+        grouped[m.state].members.push(m);
+        stateEmailsMap[m.state].push(m.email);
+      });
+
+      // Sort states alphabetically or by member count
+      const stateKeys = Object.keys(grouped).sort((a,b) => grouped[b].members.length - grouped[a].members.length);
+
+      // Render "All Jurisdictions" pill
+      const allPill = document.createElement("button");
+      allPill.className = "pill-btn active";
+      allPill.innerHTML = `All Jurisdictions <span class="pill-count">${membersData.length}</span>`;
+      allPill.onclick = () => filterByState('ALL', allPill);
+      pillsContainer.appendChild(allPill);
+
+      // Render State Pills
+      stateKeys.forEach(st => {
+        const pill = document.createElement("button");
+        pill.className = "pill-btn";
+        pill.innerHTML = `${grouped[st].stateName} <span class="pill-count">${grouped[st].members.length}</span>`;
+        pill.onclick = () => filterByState(st, pill);
+        pillsContainer.appendChild(pill);
+      });
+
+      // Render State Sections & Cards
+      stateKeys.forEach(st => {
+        const sec = document.createElement("section");
+        sec.className = "state-section";
+        sec.setAttribute("data-state", st);
+
+        sec.innerHTML = `
+          <div class="state-header">
+            <div class="state-title-wrap">
+              <h2 class="state-name">${grouped[st].stateName}</h2>
+              <span class="state-badge">${grouped[st].members.length} Member${grouped[st].members.length > 1 ? 's' : ''}</span>
+            </div>
+            <button class="btn-copy-state" onclick="copyStateEmails('${st}')">Copy ${grouped[st].stateName} Emails</button>
+          </div>
+          <div class="cards-grid" id="grid-${st}"></div>
+        `;
+        container.appendChild(sec);
+
+        const grid = sec.querySelector(`#grid-${st}`);
+        grouped[st].members.forEach(m => {
+          let badgeHtml = '';
+          if (m.status === 'CHO') {
+            badgeHtml = `<span class="cert-badge badge-certified">&#9733; Certified Hearing Official (CHO)</span>`;
+          } else if (m.status === 'Training') {
+            badgeHtml = `<span class="cert-badge badge-training">&#9679; Colleague affiliated through training</span>`;
+          } else {
+            badgeHtml = `<span class="cert-badge badge-in-progress">&#9679; Active NAHO Member (In progress toward certification)</span>`;
+          }
+
+          const card = document.createElement("article");
+          card.className = "member-card";
+          card.setAttribute("data-state", st);
+          card.innerHTML = `
+            <div class="card-top">
+              <h3 class="member-name">${m.name}</h3>
+              <div class="member-role">${m.role}</div>
+              <div class="member-district">${m.district}</div>
+              ${badgeHtml}
+            </div>
+            <div class="card-details">
+              <div class="detail-row">
+                <a href="mailto:${m.email}" class="detail-link">${m.email}</a>
+                <button class="btn-copy-small" title="Copy Email" onclick="copyText('${m.email}')">&#128203;</button>
+              </div>
+              <div class="detail-row">
+                <a href="tel:${m.phone.replace(/[^0-9]/g, '')}" class="detail-link">${m.phone}</a>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.className = "show";
+      setTimeout(() => toast.className = toast.className.replace("show", ""), 2500);
+    }
+
+    function copyText(txt) {
+      navigator.clipboard.writeText(txt).then(() => showToast("Copied: " + txt));
+    }
+
+    function copyStateEmails(st) {
+      const emails = stateEmailsMap[st] || [];
+      if (emails.length) {
+        navigator.clipboard.writeText(emails.join("; ")).then(() => {
+          showToast(`Copied ${emails.length} emails for ${st}!`);
+        });
+      }
+    }
+
+    function copyAllEmails() {
+      const all = membersData.map(m => m.email);
+      navigator.clipboard.writeText(all.join("; ")).then(() => {
+        showToast(`Copied full listserv (${all.length} addresses)!`);
+      });
+    }
+
+    function filterByState(st, btn) {
+      document.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+
+      document.querySelectorAll(".state-section").forEach(sec => {
+        sec.style.display = (st === "ALL" || sec.getAttribute("data-state") === st) ? "block" : "none";
+      });
+      document.getElementById("searchInput").value = "";
+      document.querySelectorAll(".member-card").forEach(c => c.style.display = "flex");
+    }
+
+    function filterDirectory() {
+      const query = document.getElementById("searchInput").value.toLowerCase().trim();
+      const sections = document.querySelectorAll(".state-section");
+
+      if (!query) {
+        document.querySelectorAll(".member-card").forEach(c => c.style.display = "flex");
+        sections.forEach(s => s.style.display = "block");
+        return;
+      }
+
+      sections.forEach(sec => {
+        const cards = sec.querySelectorAll(".member-card");
+        let visibleCount = 0;
+        cards.forEach(card => {
+          if (card.innerText.toLowerCase().includes(query)) {
+            card.style.display = "flex";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+        sec.style.display = visibleCount > 0 ? "block" : "none";
+      });
+    }
+
+    // Initialize
+    window.addEventListener("DOMContentLoaded", loadMembers);
+  </script>
+</body>
+</html>
