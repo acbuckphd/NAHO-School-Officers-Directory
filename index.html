@@ -225,9 +225,11 @@
     async function loadMembers() {
       try {
         const response = await fetch('members.json?t=' + new Date().getTime());
-        const result = await response.json();
-membersData = Array.isArray(result) ? result : (result.members || []);
-        renderDashboard();
+const result = await response.json();
+membersData = Array.isArray(result) 
+  ? result 
+  : (result.members || result.Members || Object.values(result)[0] || []);
+renderDashboard();
       } catch (err) {
         console.error("Failed to load members.json", err);
         document.getElementById("directoryContainer").innerHTML = "<p style='text-align:center; padding:40px; color:#64748b;'>Unable to load member directory data. Ensure members.json is present.</p>";
@@ -241,17 +243,17 @@ membersData = Array.isArray(result) ? result : (result.members || []);
       pillsContainer.innerHTML = "";
       stateEmailsMap = {};
 
-      // Group members by state
-      const grouped = {};
       membersData.forEach(m => {
-        if (!grouped[m.state]) {
-          grouped[m.state] = { stateName: m.stateName || m.state, members: [] };
-          stateEmailsMap[m.state] = [];
-        }
-        grouped[m.state].members.push(m);
-        stateEmailsMap[m.state].push(m.email);
-      });
-
+  const stateKey = m.state || m.State || 'Other';
+  const stateLabel = m.stateName || m.state || m.State || stateKey;
+  if (!grouped[stateKey]) {
+    grouped[stateKey] = { stateName: stateLabel, members: [] };
+    stateEmailsMap[stateKey] = [];
+  }
+  grouped[stateKey].members.push(m);
+  if (m.email) stateEmailsMap[stateKey].push(m.email);
+});
+     
       // Sort states alphabetically or by member count
       const stateKeys = Object.keys(grouped).sort((a,b) => grouped[b].members.length - grouped[a].members.length);
 
