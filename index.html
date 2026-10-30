@@ -242,7 +242,7 @@ renderDashboard();
       container.innerHTML = "";
       pillsContainer.innerHTML = "";
       stateEmailsMap = {};
-
+const grouped = {};
       membersData.forEach(m => {
   const stateKey = m.state || m.State || 'Other';
   const stateLabel = m.stateName || m.state || m.State || stateKey;
