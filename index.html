@@ -225,7 +225,8 @@
     async function loadMembers() {
       try {
         const response = await fetch('members.json?t=' + new Date().getTime());
-        membersData = await response.json();
+        const result = await response.json();
+membersData = Array.isArray(result) ? result : (result.members || []);
         renderDashboard();
       } catch (err) {
         console.error("Failed to load members.json", err);
