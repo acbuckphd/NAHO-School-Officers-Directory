@@ -287,20 +287,21 @@ const grouped = {};
             </div>
             <button class="btn-copy-state" onclick="copyStateEmails('${st}')">Copy ${grouped[st].stateName} Emails</button>
           </div>
-          <div class="cards-grid" id="grid-${st}"></div>
+          <div class="cards-grid"></div>
         `;
         container.appendChild(sec);
 
-        const grid = sec.querySelector(`#grid-${st}`);
+        const grid = sec.querySelector('.cards-grid');
         grouped[st].members.forEach(m => {
           let badgeHtml = '';
-          if (m.status === 'CHO') {
-            badgeHtml = `<span class="cert-badge badge-certified">&#9733; Certified Hearing Official (CHO)</span>`;
-          } else if (m.status === 'Training') {
-            badgeHtml = `<span class="cert-badge badge-training">&#9679; Colleague affiliated through training</span>`;
-          } else {
-            badgeHtml = `<span class="cert-badge badge-in-progress">&#9679; Active NAHO Member (In progress toward certification)</span>`;
-          }
+const stat = (m.status || '').toLowerCase();
+if (stat.includes('cho') || stat.includes('certified')) {
+  badgeHtml = `<span class="cert-badge badge-certified">&#9733; Certified Hearing Official (CHO)</span>`;
+} else if (stat.includes('train')) {
+  badgeHtml = `<span class="cert-badge badge-training">&#9679; Colleague affiliated through training</span>`;
+} else {
+  badgeHtml = `<span class="cert-badge badge-in-progress">&#9679; Active NAHO Member (In progress toward certification)</span>`;
+}
 
           const card = document.createElement("article");
           card.className = "member-card";
